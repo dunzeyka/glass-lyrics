@@ -1,7 +1,7 @@
 // NAME: Glass Lyrics
 // AUTHOR: dunzeyka (https://github.com/dunzeyka)
 // DESCRIPTION: Полноэкранный текст песни в стиле Apple Music: размытая обложка на фоне, плавная прокрутка, заливка слов.
-// VERSION: 0.2.0
+// VERSION: 0.2.1
 
 (function GlassLyrics() {
   const Spicetify = window.Spicetify;
@@ -21,7 +21,7 @@
     anchor: 0.3, // на какой высоте (доля) держать активную строку
     leadMs: 120, // насколько раньше подсвечивать строку
     fillEndGapMs: 200, // заливка заканчивается за столько мс до начала следующей строки
-    maxFillMs: 15000, // но не тянется дольше этого, если до следующей строки очень долго
+    maxFillMs: 5000, // но не дольше 5 с: если артист допел раньше, строка не «доползает» в тишине
     minGapMs: 3000, // проигрыш длиннее этого показывается точками
     manualScrollMs: 3000, // сколько ждать после ручной прокрутки
     useLrclibFallback: true, // если у Spotify нет текста — искать на lrclib.net
