@@ -1,7 +1,7 @@
 // NAME: Glass Lyrics
 // AUTHOR: dunzeyka (https://github.com/dunzeyka)
 // DESCRIPTION: Полноэкранный текст песни в стиле Apple Music: размытая обложка на фоне, плавная прокрутка, заливка слов.
-// VERSION: 0.2.2
+// VERSION: 0.2.3
 
 (function GlassLyrics() {
   const Spicetify = window.Spicetify;
@@ -423,7 +423,7 @@
 
       if (S.synced) {
         inner.addEventListener("click", () => {
-          S.manualUntil = 0;
+          exitManual(false);
           seek(ln.start);
         });
       }
@@ -645,6 +645,15 @@
     { passive: false }
   );
 
+  // Выход из режима ручной прокрутки. Раньше клик по строке обнулял только таймер, а класс aml-manual
+  // (он выключает размытие) оставался навсегда, и размытие пропадало до перезапуска Spotify.
+  function exitManual(scroll) {
+    S.manualUntil = 0;
+    S.manualY = null;
+    root.classList.remove("aml-manual");
+    if (scroll) scrollToActive(true);
+  }
+
   function tick() {
     if (!S.open) return;
     const pos = Spicetify.Player.getProgress();
@@ -652,12 +661,7 @@
     updateProgress(pos, dur);
     updateVolume();
 
-    if (S.manualUntil && Date.now() > S.manualUntil) {
-      S.manualUntil = 0;
-      S.manualY = null;
-      root.classList.remove("aml-manual");
-      scrollToActive(true);
-    }
+    if (S.manualUntil && Date.now() > S.manualUntil) exitManual(true);
 
     if (S.synced && S.lines.length) {
       const t = pos + CONFIG.leadMs;
@@ -784,6 +788,7 @@
     setWindowButtons(false);
     updateMeta();
     updatePlaying();
+    exitManual(false);
     root.classList.add("aml-open");
     button.active = true;
     loadLyrics();
