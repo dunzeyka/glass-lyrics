@@ -1,0 +1,11 @@
+{
+  "name": "Glass Lyrics",
+  "description": "Fullscreen synced lyrics in the Apple Music style: blurred animated album-art background, smooth scrolling, word fill, depth blur.",
+  "preview": "preview.png",
+  "main": "src/glass-lyrics.js",
+  "readme": "README.md",
+  "authors": [
+    { "name": "dunzeyka", "url": "https://github.com/dunzeyka" }
+  ],
+  "tags": ["lyrics", "fullscreen", "apple music", "synced lyrics"]
+}
